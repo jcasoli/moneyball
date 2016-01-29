@@ -1,5 +1,6 @@
 from flask import Flask
 import httplib, urllib, base64
+import json
 app = Flask(__name__)
 
 
@@ -17,7 +18,6 @@ def hello():
     })
 
     try:
-        fh = open("temp.txt", 'a')
         conn = httplib.HTTPSConnection('api.fantasydata.net')
         conn.request("GET", "/mlb/v2/JSON/teams?key=0deb8f835f264ad99e24cc3622aeb396")
         print('made it')
