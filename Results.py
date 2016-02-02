@@ -6,6 +6,7 @@ now = datetime.now()
 today = '%s-%s-%s' % (now.year, now.month, now.day)
 connection = httplib.HTTPSConnection('api.fantasydata.net')
 key = '0deb8f835f264ad99e24cc3622aeb396'
+n = 2
 def games_today(conn, date):
         conn.request("GET", "/mlb/v2/JSON/GamesByDate/%skey=0deb8f835f264ad99e24cc3622aeb396")(today)
         print('made it')
