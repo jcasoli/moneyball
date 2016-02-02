@@ -1,23 +1,22 @@
 import httplib, urllib, base64
 
 
-def pull_data():
-########### Python 2.7 #############
-    headers = {
-    # Request headers
-    'Ocp-Apim-Subscription-Key': '0deb8f835f264ad99e24cc3622aeb396',
-    }
+class Connection:
+    OcpApimSubscriptionKey = '0deb8f835f264ad99e24cc3622aeb396'
+    http_loc = 'api.fantasydata.net'
+    mlb_path = '/mlb/v2/JSON/'
 
-    params = urllib.urlencode({
-    })
 
-    try:
-        conn = httplib.HTTPSConnection('api.fantasydata.net')
-        conn.request("GET", "/mlb/v2/JSON/teams?key=0deb8f835f264ad99e24cc3622aeb396")
-        #conn.request("GET", "/mlb/v2/JSON/teams&%s" % params, "{body}", headers)
+    def get_connection(self):
+    ########### Python 2.7 #############
+        try:
+            conn = httplib.HTTPSConnection('api.fantasydata.net')
+            return conn
+        except Exception as e:
+            print("Could not create connection.. here is error: {}".format(e))
+
+    def get_data(self, field, date, conn):
+        conn.request("GET", Connection.mlb_path + field + "?key=" + Connection.OcpApimSubscriptionKey)
         response = conn.getresponse()
         data = response.read()
-        conn.close()
         return data
-    except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
