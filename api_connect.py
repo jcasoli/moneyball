@@ -1,4 +1,4 @@
-import httplib, urllib, base64
+import httplib
 import sys
 
 active_teams = 'teams'
@@ -10,6 +10,8 @@ games_by_date = 'GamesByDate'
 get_news = 'News'
 get_news_by_date = 'NewsByDate'
 get_news_by_player = 'NewsByPlayerID'
+get_player_details_by_active = 'Players'
+get_player_details_by_free_agent = 'FreeAgents'
 
 class Connection:
     OcpApimSubscriptionKey = '0deb8f835f264ad99e24cc3622aeb396'
@@ -121,6 +123,19 @@ class Connection:
         except Exception as e:
             print "warning: could not get news by player"
             return []
+
+
+    def get_player_details_by_active(self):
+        try:
+            self.conn.request("GET", self.mlb_path + get_player_details_by_active +
+                            "?key=" + Connection.OcpApimSubscriptionKey)
+            response = self.conn.getresponse()
+            data = response.read()
+            return data
+        except Exception as e:
+            print "warning: could not get news by player"
+            return []
+
 
 
 
