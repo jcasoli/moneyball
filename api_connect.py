@@ -6,6 +6,10 @@ are_games_in_progress = 'AreAnyGamesInProgress'
 box_score = 'BoxScore'
 box_scores_by_date = 'BoxScores'
 box_scores_by_date_delta = 'BoxScoresDelta'
+games_by_date = 'GamesByDate'
+get_news = 'News'
+get_news_by_date = 'NewsByDate'
+get_news_by_player = 'NewsByPlayerID'
 
 class Connection:
     OcpApimSubscriptionKey = '0deb8f835f264ad99e24cc3622aeb396'
@@ -72,6 +76,50 @@ class Connection:
             return data
         except Exception as e:
             print "warning: could not get active teams"
+            return []
+
+    def get_games_by_date(self, date):
+        try:
+            self.conn.request("GET", self.mlb_path + games_by_date + "/" + date +
+                            "?key=" + Connection.OcpApimSubscriptionKey)
+            response = self.conn.getresponse()
+            data = response.read()
+            return data
+        except Exception as e:
+            print "warning: could not get active teams"
+            return []
+
+    def get_news(self):
+        try:
+            self.conn.request("GET", self.mlb_path + get_news +
+                            "?key=" + Connection.OcpApimSubscriptionKey)
+            response = self.conn.getresponse()
+            data = response.read()
+            return data
+        except Exception as e:
+            print "warning: could not get news"
+            return []
+
+    def get_news_by_date(self, date):
+        try:
+            self.conn.request("GET", self.mlb_path + get_news_by_date + "/" + date +
+                            "?key=" + Connection.OcpApimSubscriptionKey)
+            response = self.conn.getresponse()
+            data = response.read()
+            return data
+        except Exception as e:
+            print "warning: could not get news"
+            return []
+
+    def get_news_by_player(self, playerid):
+        try:
+            self.conn.request("GET", self.mlb_path + get_news_by_player + "/" + playerid +
+                            "?key=" + Connection.OcpApimSubscriptionKey)
+            response = self.conn.getresponse()
+            data = response.read()
+            return data
+        except Exception as e:
+            print "warning: could not get news by player"
             return []
 
 
