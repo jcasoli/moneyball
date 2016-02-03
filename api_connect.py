@@ -12,6 +12,9 @@ get_news_by_date = 'NewsByDate'
 get_news_by_player = 'NewsByPlayerID'
 get_player_details_by_active = 'Players'
 get_player_details_by_free_agent = 'FreeAgents'
+get_player_details_by_player = 'Player'
+get_player_game_stats_by_date = 'PlayerGameStatsByDate'
+get_player_game_stats_by_player = 'PlayerGameStatsByPlayer'
 
 class Connection:
     OcpApimSubscriptionKey = '0deb8f835f264ad99e24cc3622aeb396'
@@ -136,9 +139,51 @@ class Connection:
             print "warning: could not get news by player"
             return []
 
+    def get_player_details_by_free_agents(self):
+        try:
+            self.conn.request("GET", self.mlb_path + get_player_details_by_free_agent +
+                            "?key=" + Connection.OcpApimSubscriptionKey)
+            response = self.conn.getresponse()
+            data = response.read()
+            return data
+        except Exception as e:
+            print "warning: could not get news by player"
+            return []
 
 
+    def get_player_details_by_player(self, playerid):
+        try:
+            self.conn.request("GET", self.mlb_path + get_player_details_by_player + "/" + playerid +
+                            "?key=" + Connection.OcpApimSubscriptionKey)
+            response = self.conn.getresponse()
+            data = response.read()
+            return data
+        except Exception as e:
+            print "warning: could not get news by player"
+            return []
 
+
+    def get_player_game_stats_by_date(self, date):
+        try:
+            self.conn.request("GET", self.mlb_path + get_player_game_stats_by_date + "/" + date +
+                            "?key=" + Connection.OcpApimSubscriptionKey)
+            response = self.conn.getresponse()
+            data = response.read()
+            return data
+        except Exception as e:
+            print "warning: could not get player game stats by date"
+            return []
+
+    def get_player_game_stats_by_player(self, date, playerid):
+        try:
+            self.conn.request("GET", self.mlb_path + get_player_game_stats_by_player + "/" + date + "/" + playerid +
+                            "?key=" + Connection.OcpApimSubscriptionKey)
+            response = self.conn.getresponse()
+            data = response.read()
+            return data
+        except Exception as e:
+            print "warning: could not get player game stats by date"
+            return []
 
     def close_connection(self):
         self.conn.close()
