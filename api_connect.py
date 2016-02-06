@@ -34,7 +34,7 @@ class Connection:
 
     def __init__(self):
         try:
-            conn = httplib.HTTPSConnection('api.fantasydata.net')
+            self.conn = httplib.HTTPSConnection('api.fantasydata.net')
         except Exception as e:
             sys.exit(e)
 
@@ -243,8 +243,7 @@ class Connection:
 
     def get_projected_player_game_stats_by_date(self, date):
         try:
-            self.conn.request("GET", self.mlb_path + get_projected_player_game_stats_by_date + "/" + date +
-                            "?key=" + Connection.OcpApimSubscriptionKey)
+
             response = self.conn.getresponse()
             data = response.read()
             return data
@@ -252,62 +251,42 @@ class Connection:
             print "warning: could not get player game stats by date"
             return []
 
-    def projected_player_game_stats_by_player(self, date, playerid):
+    def get_projected_player_game_stats_by_player(self, date, playerid):
         try:
-            self.conn.request("GET", self.mlb_path + get_player_game_stats_by_player + "/" + date + "/" + playerid +
-                            "?key=" + Connection.OcpApimSubscriptionKey)
-            response = self.conn.getresponse()
-            data = response.read()
-            return data
+            return self._get_data(get_projected_player_game_stats_by_player, [date, playerid])
         except Exception as e:
             print "warning: could not get player game stats by date"
             return []
 
     def get_schedules(self, season):
         try:
-            self.conn.request("GET", self.mlb_path + get_schedules + "/" + season +
-                            "?key=" + Connection.OcpApimSubscriptionKey)
-            response = self.conn.getresponse()
-            data = response.read()
-            return data
+            return self._get_data(get_schedules, [season])
         except Exception as e:
             print "warning: could not get player game stats by date"
             return []
 
     def get_stadiums(self):
         try:
-            self.conn.request("GET", self.mlb_path + get_stadiums +
-                            "?key=" + Connection.OcpApimSubscriptionKey)
-            response = self.conn.getresponse()
-            data = response.read()
-            return data
+            return self._get_data(get_stadiums)
         except Exception as e:
             print "warning: could not get player game stats by date"
             return []
 
     def get_team_game_stats_by_date(self, date):
         try:
-            self.conn.request("GET", self.mlb_path + get_team_game_stats_by_date + "/" + date +
-                            "?key=" + Connection.OcpApimSubscriptionKey)
-            response = self.conn.getresponse()
-            data = response.read()
-            return data
+            return self._get_data(get_team_game_stats_by_date, [date])
         except Exception as e:
             print "warning: could not get player game stats by date"
             return []
 
     def get_team_season_stats(self, season):
         try:
-            self.conn.request("GET", self.mlb_path + get_team_season_stats + "/" + season +
-                            "?key=" + Connection.OcpApimSubscriptionKey)
-            response = self.conn.getresponse()
-            data = response.read()
-            return data
+            return self._get_data(get_team_season_stats, [season])
         except Exception as e:
             print "warning: could not get player game stats by date"
             return []
 
-    def _get_data(self, request_type, params):
+    def _get_data(self, request_type, params=[]):
         request_url = self._create_request_url(request_type, params)
         self.conn.request("GET", request_url)
         response = self.conn.getresponse()
