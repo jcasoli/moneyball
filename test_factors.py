@@ -41,5 +41,7 @@ class factors:
 
 if __name__ == "__main__":
     fact = factors([1])
-    fact.run()
+    #fact.run()
+    conn = api_connect.Connection()
+    data = conn.get_games_by_date("2014-06-06")
     pass
