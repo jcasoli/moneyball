@@ -1,25 +1,17 @@
-
 import json
-import httplib, urllib
-from datetime import datetime
-now = datetime.now()
-today = '%s-%s-%s' % (now.year, now.month, now.day)
-connection = httplib.HTTPSConnection('api.fantasydata.net')
-key = '0deb8f835f264ad99e24cc3622aeb396'
-n = 2
-def games_today(conn, date):
-        conn.request("GET", "/mlb/v2/JSON/GamesByDate/%skey=0deb8f835f264ad99e24cc3622aeb396")(today)
-        print('made it')
-        #conn.request("GET", "/mlb/v2/JSON/teams&%s" % params, "{body}", headers)
-        response = conn.getresponse()
-        data = response.read()
-        conn.close()
-        jn = json.loads(data)
-def win_streak(team_id1, team_id2, conn, date):
-        pass
 
-def team1_streak(team_id1, connection, date):
-        pass
+def test_win_streak(team_id1, team_id2, conn, date):
+    return -5
 
-if __name__ == "__main__":
-    win_streak(5, 5, connection, today)
+def test_road_trip(team_id1, team_id2, conn, date):
+    return 3
+
+def test_first_game_back(team_id1, team_id2, conn, date):
+    return 1
+
+def test_east_west(team_id1, team_id2, conn, date):
+    return -2
+
+def test_left_handed(team_id1, team_id2, conn, date):
+    return 8
+
