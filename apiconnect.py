@@ -1,5 +1,3 @@
-#new code
-
 import httplib
 import sys
 
@@ -32,7 +30,6 @@ class Connection:
     OcpApimSubscriptionKey = '0deb8f835f264ad99e24cc3622aeb396'
     http_loc = 'api.fantasydata.net'
     mlb_path = '/mlb/v2/JSON/'
-    conn = None
 
     def __init__(self):
         try:
@@ -215,7 +212,7 @@ class Connection:
             print "warning: could not get player game stats by date"
             return None
 
-    def _get_data(self, request_type, params=[]):
+    def _get_data(self, request_type, params=()):
         request_url = self._create_request_url(request_type, params)
         self.conn.request("GET", request_url)
         response = self.conn.getresponse()

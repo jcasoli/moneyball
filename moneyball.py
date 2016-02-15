@@ -1,6 +1,7 @@
-from flask import Flask, request, redirect, url_for, session
+from flask import Flask, request, redirect, url_for
 from flask import render_template
-from flask.ext.login import LoginManager
+
+import testfactors
 
 app = Flask(__name__)
 app.secret_key = "moneyball"
@@ -12,9 +13,13 @@ def home():
 
 @app.route("/welcome")
 def welcome():
-    return render_template('welcome.html')
+    test = testfactors.Test()
 
-# route for handling the login page logic
+    return render_template('welcome.html', results=results)
+
+
+
+#route for handling the login page logic
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
