@@ -14,8 +14,8 @@ def home():
 @app.route("/welcome")
 def welcome():
     test = testfactors.Test()
-
-    return render_template('welcome.html', results=results)
+    result = test.run()
+    return render_template('welcome.html', result=result)
 
 
 

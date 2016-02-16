@@ -34,7 +34,7 @@ class Test:
     def run(self):
         """ Runs through all specified factors and returns a dictionary of results with factor names as keys """
         todays_games = self._get_todays_games()
-        #matchups = dict.fromkeys(todays_games)
+        matchups = dict.fromkeys(todays_games)
 
         matchup = dict.fromkeys(defaults.FACTORS)
         for game in todays_games[:1]:
