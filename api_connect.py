@@ -33,6 +33,10 @@ class Connection:
     conn = None
 
     def __init__(self):
+        """
+
+        :rtype: object
+        """
         try:
             conn = httplib.HTTPSConnection('api.fantasydata.net')
         except Exception as e:
