@@ -1,7 +1,8 @@
 from flask import Flask, request, redirect, url_for
 from flask import render_template
-
 import testfactors
+
+import datetime
 
 app = Flask(__name__)
 app.secret_key = "moneyball"
@@ -13,7 +14,8 @@ def home():
 
 @app.route("/welcome")
 def welcome():
-    test = testfactors.Test()
+    date = datetime.datetime.now()
+    test = testfactors.Test(date)
     result = test.run()
     return render_template('welcome.html', result=result)
 

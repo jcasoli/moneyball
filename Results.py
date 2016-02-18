@@ -1,9 +1,9 @@
-
-import connect
 import httplib, urllib
 import datetime
 from datetime import date, timedelta
 import json
+
+import apiconnect
 
 today = datetime.date(2015, 5, 25)
 todayString = '%s-%s-%s' % (today.year, today.month, today.day)
@@ -12,7 +12,7 @@ key = '0deb8f835f264ad99e24cc3622aeb396'
 
 
 def games_today(conn, date):
-    conn = connect.Connection()
+    conn = apiconnect.Connection()
 #    conn.close_connection()
   #  print date
     dateString = '%s-%s-%s' % (date.year, date.month, date.day)
@@ -29,7 +29,7 @@ def games_today(conn, date):
     for index, key in enumerate(jn):
         awayTeam = jn[index]['AwayTeam']
         homeTeam = jn[index]['HomeTeam']
-        win_streak(awayTeam, homeTeam, conn, date)
+        test_win_streak(awayTeam, homeTeam, conn, date)
 
 
 def test_win_streak(team_id1, team_id2, conn, date):
