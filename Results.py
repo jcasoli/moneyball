@@ -103,3 +103,4 @@ def didWin(team_id1, conn, date):
 
 if __name__ == "__main__":
     games_today(connection, today)
+
