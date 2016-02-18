@@ -1,16 +1,17 @@
 import apiconnect
 import json
-from datetime import datetime
 import sys
-import results
+
 import defaults
+
+from datetime import date
+
 class Test:
 
-    def __init__(self, factor_list=defaults.F_FACTORS):
+    def __init__(self, date, factor_list=defaults.F_FACTORS):
         self.factors = factor_list
-        now = datetime.now()
-        #self.date = '%s-%s-%s' % (now.year, now.month, now.day)
-        self.date = '07-07-2015'
+        self.datetimeobj = date
+        self.date = self._get_str_date(date)
         try:
             self.conn = apiconnect.Connection()
         except:
@@ -35,12 +36,20 @@ class Test:
         """
         player = json.loads(self.conn.get_player_details_by_player(playerid))
 
+    def _get_str_date(self, datetime):
+        """
+
+        :param datetime: datetime object
+        :return: string 'dd-mm-yyyy'
+        """
+        return '07-07-2015'
+
     def _get_stadium_by_id(self, stadiumid):
         """
         :param stadiumid: stadium_id
         :return: Stadium Name (string)
         """
-        stadium = None
+        return None
 
     def run(self):
         """ Runs through all specified factors and returns a dictionary of results with factor names as keys """
@@ -65,11 +74,17 @@ class Test:
 
             matchup[defaults.HEATRATING] = heat_rating_dict
             matchup[defaults.STADIUM] = self._get_stadium_by_id(game['StadiumID'])
+            matchup[defaults.AWAYTEAM] = game['AwayTeam']
+            matchup[defaults.HOMETEAM] = game['HomeTeam']
+            matchup[defaults.DATETIME] = game['DateTime']
+            matchup[defaults.AWAYTEAMPROBABLEPITCHER] = game['AwayTeamProbablePitcher']
+            matchup[defaults.HOMETEAMPROBABLEPITCHER] = game['HomeTeamProbablePitcher']
+            results.append(matchup)
 
-        return matchup
+        return results
 
 
 
 if __name__ == "__main__":
-    fact = Test()
+    fact = Test(date.now())
     fact.run()
