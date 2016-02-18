@@ -1,4 +1,4 @@
-import api_connect
+
 import connect
 import httplib, urllib
 import datetime
