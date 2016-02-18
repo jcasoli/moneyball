@@ -16,6 +16,7 @@ class Test:
         except:
             print("Could not open api connection. Will Exit")
             sys.exit(0)
+        self.stadiums = self.conn.get_stadiums()
 
     def __del__(self):
         try:
@@ -24,22 +25,46 @@ class Test:
             print e
 
     def _get_todays_games(self):
-        #returns a list of team_id tuples representing todays games
-        json_games = json.loads(self.conn.get_games_by_date(self.date))
-        games = []
-        for game in json_games:
-            games.append((game['HomeTeamID'], game['AwayTeamID']))
-        return games
+        """returns dictionary formatted list of games """
+        return json.loads(self.conn.get_games_by_date(self.date))
+
+    def _get_player_by_id(self, playerid):
+        """
+        :param playerid: player_id
+        :return: Actual Player Name (string)
+        """
+        player = json.loads(self.conn.get_player_details_by_player(playerid))
+
+    def _get_stadium_by_id(self, stadiumid):
+        """
+        :param stadiumid: stadium_id
+        :return: Stadium Name (string)
+        """
+        stadium =
 
     def run(self):
         """ Runs through all specified factors and returns a dictionary of results with factor names as keys """
-        todays_games = self._get_todays_games()
-        matchups = dict.fromkeys(todays_games)
+        results = []
 
-        matchup = dict.fromkeys(defaults.FACTORS)
-        for game in todays_games[:1]:
+        # Initialize matchup dict. It will contain results from each game played today
+        matchup = dict.fromkeys(defaults.GAME_KEYS)
+        heat_rating_dict = dict.fromkeys(defaults.FACTORS)
+
+        # Get dictionary version of todays games from the fantasy data api
+        days_games = self._get_todays_games()
+
+
+        # Populate matchup dictionary by running through every matchup. This is the main computation
+        for game in days_games:
+
+            # Run through every test in results.py and store result in dict
             for factor in self.factors:
-                matchup[factor.func_name] = factor(game[0], game[1], self.conn, self.date)
+
+                # Compute result for current test factor
+                heat_rating_dict[factor.func_name] = factor(game['HomeTeamID'], game['AwayTeamID'], self.conn, self.date)
+
+            matchup[defaults.HEATRATING] = heat_rating_dict
+            matchup[defaults.STADIUM] = self._get_stadium_by_id(game['StadiumID'])
 
         return matchup
 
