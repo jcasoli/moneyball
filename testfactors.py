@@ -40,7 +40,7 @@ class Test:
         :param stadiumid: stadium_id
         :return: Stadium Name (string)
         """
-        stadium =
+        stadium = None
 
     def run(self):
         """ Runs through all specified factors and returns a dictionary of results with factor names as keys """
