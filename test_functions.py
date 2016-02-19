@@ -5,10 +5,10 @@ import datetime
 from datetime import date, timedelta
 import json
 
-today = datetime.date(2015, 5, 25)
-todayString = '%s-%s-%s' % (today.year, today.month, today.day)
-conn = apiconnect.Connection()
-key = '0deb8f835f264ad99e24cc3622aeb396'
+# today = datetime.date(2015, 5, 25)
+# todayString = '%s-%s-%s' % (today.year, today.month, today.day)
+# conn = apiconnect.Connection()
+# key = '0deb8f835f264ad99e24cc3622aeb396'
 
 def test_win_streak(homeTeam, awayTeam, conn, date):
     streak1 = 0
