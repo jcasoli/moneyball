@@ -20,7 +20,7 @@ def test_win_streak(homeTeam, awayTeam, conn, date):
     if (date.month<10 and date.day>9):
          dateString = '%s-0%s-%s' % (date.year, date.month, date.day)
     if (date.month>9 and date.day<10):
-         dateString = '%s-%s-0%s' % (date.year, date.month, date.day)
+         dateString = '%s-%s-%s' % (date.year, date.month, date.day)
 
 #       Check Away Team Streak
     x = didWin(homeTeam, conn, dateString)
@@ -29,7 +29,7 @@ def test_win_streak(homeTeam, awayTeam, conn, date):
             streak1 = streak1 + 1
         currentDate = currentDate - timedelta(days=1.0)
         dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
-        x = didWin(team_id1, conn, dateString)
+        x = didWin(homeTeam, conn, dateString)
     currentDate = date
     dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
     x = didWin(awayTeam, conn, dateString)
