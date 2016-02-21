@@ -11,10 +11,12 @@
       <h1>Welcome to Moneyball!</h1>
       <br>
         <table>
-            {% for key, value in result.iteritems() %}
+            {% for matchup in result %}
             <tr>
-                <th> {{ key }} </th>
-                <td> {{ value }} </td>
+                <th> {{ matchup['HomeTeam'] }} vs. {{ matchup['AwayTeam'] }}</th>
+                <td> {{ matchup['DateTime'] }} </td>
+                <td> {{ matchup['HomeTeamProbablePitcher'] }} </td>
+                <td> {{ matchup['AwayTeamProbablePitcher'] }} </td>
             </tr>
             {% endfor %}
         </table>

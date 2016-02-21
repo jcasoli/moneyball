@@ -25,6 +25,7 @@ get_schedules = 'Games'
 get_stadiums = 'Stadiums'
 get_team_game_stats_by_date = 'TeamGameStatsByDate'
 get_team_season_stats = 'TeamSeasonStats'
+get_play_by_play = 'PlayByPlay'
 
 class Connection:
     OcpApimSubscriptionKey = '0deb8f835f264ad99e24cc3622aeb396'
@@ -208,6 +209,13 @@ class Connection:
     def get_team_season_stats(self, season):
         try:
             return self._get_data(get_team_season_stats, [season])
+        except Exception as e:
+            print "warning: could not get player game stats by date"
+            return None
+
+    def get_play_by_play(self, gameid):
+        try:
+            return self._get_data(get_play_by_play, [gameid])
         except Exception as e:
             print "warning: could not get player game stats by date"
             return None

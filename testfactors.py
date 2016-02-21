@@ -55,8 +55,6 @@ class Test:
         """ Runs through all specified factors and returns a dictionary of results with factor names as keys """
         results = []
 
-        # Initialize matchup dict. It will contain results from each game played today
-        matchup = dict.fromkeys(defaults.GAME_KEYS)
         heat_rating_dict = dict.fromkeys(defaults.FACTORS)
 
         # Get dictionary version of todays games from the fantasy data api
@@ -66,19 +64,22 @@ class Test:
         # Populate matchup dictionary by running through every matchup. This is the main computation
         for game in days_games:
 
+            # Initialize matchup dict. It will contain results from each game played today
+            matchup = dict.fromkeys(defaults.GAME_KEYS)
+
             # Run through every test in results.py and store result in dict
             for factor in self.factors:
 
                 # Compute result for current test factor
-                heat_rating_dict[factor.func_name] = factor(game['HomeTeamID'], game['AwayTeamID'], self.conn, self.date)
+                heat_rating_dict[factor.func_name] = factor(game['HomeTeam'], game['AwayTeam'], self.conn, self.datetimeobj)
 
             matchup[defaults.HEATRATING] = heat_rating_dict
             matchup[defaults.STADIUM] = self._get_stadium_by_id(game['StadiumID'])
             matchup[defaults.AWAYTEAM] = game['AwayTeam']
             matchup[defaults.HOMETEAM] = game['HomeTeam']
             matchup[defaults.DATETIME] = game['DateTime']
-            matchup[defaults.AWAYTEAMPROBABLEPITCHER] = game['AwayTeamProbablePitcher']
-            matchup[defaults.HOMETEAMPROBABLEPITCHER] = game['HomeTeamProbablePitcher']
+            matchup[defaults.AWAYTEAMPROBABLEPITCHER] = game['AwayTeamProbablePitcherID']
+            matchup[defaults.HOMETEAMPROBABLEPITCHER] = game['HomeTeamProbablePitcherID']
             results.append(matchup)
 
         return results
