@@ -151,7 +151,7 @@ class Connection:
 
     def get_season_stats_by_player(self, season, playerid):
         try:
-            return self._get_data(get_season_stats_by_player, [season, playerid])
+            return self._get_data(get_season_stats_by_player, [season, str(playerid)])
         except Exception as e:
             print "warning: could not get player game stats by date"
             return None
@@ -180,7 +180,7 @@ class Connection:
 
     def get_projected_player_game_stats_by_player(self, date, playerid):
         try:
-            return self._get_data(get_projected_player_game_stats_by_player, [date, playerid])
+            return self._get_data(get_projected_player_game_stats_by_player, [date, str(playerid)])
         except Exception as e:
             print "warning: could not get player game stats by date"
             return None
@@ -215,9 +215,9 @@ class Connection:
 
     def get_play_by_play(self, gameid):
         try:
-            return self._get_data(get_play_by_play, [gameid])
+            return self._get_data(get_play_by_play, [str(gameid)])
         except Exception as e:
-            print "warning: could not get player game stats by date"
+            print "warning: could not get play by play"
             return None
 
     def _get_data(self, request_type, params=()):
@@ -238,3 +238,11 @@ class Connection:
 
     def close_connection(self):
         self.conn.close()
+
+
+if __name__ == '__main__':
+    conn = Connection()
+    data = conn.get_games_by_date('07-07-2015')
+    data2 = conn.get_projected_player_game_stats_by_date('07-07-2015')
+    data3 = conn.get_play_by_play(18373)
+    pass
