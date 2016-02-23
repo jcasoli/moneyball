@@ -1,5 +1,7 @@
 from flask import Flask, request, redirect, url_for
 from flask import render_template
+
+import forms
 import testfactors
 
 import datetime
@@ -7,17 +9,20 @@ import datetime
 app = Flask(__name__)
 app.secret_key = "moneyball"
 
-
 @app.route("/")
 def home():
     return "Hello World"
 
-@app.route("/welcome")
+@app.route("/welcome", methods=['GET', 'POST'])
 def welcome():
-    date = datetime.datetime.now()
-    test = testfactors.Test(date)
-    result = test.run()
-    return render_template('welcome.html', result=result)
+    test = testfactors.Test()
+    result = test.run(datetime.datetime.now())
+    form = forms.DateForm()
+    if form.validate_on_submit():
+        date = form.dt.data
+        result = test.run(date)
+        return render_template('welcome.html', result=result, form=form)
+    return render_template('welcome.html', result=result, form=form)
 
 
 

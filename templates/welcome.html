@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Flask Intro</title>
+    <title>Welcome to Moneyball</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="static/welcome.css" rel="stylesheet" media="screen">
-
   </head>
   <body>
     <div class="container">
       <h1>Welcome to Moneyball!</h1>
       <br>
+        <form action="#" method="post">
+            {{ form.dt(class='datepicker') }}
+            {{ form.hidden_tag() }}
+            <input type="submit"/>
+        </form>
         <table>
             {% for matchup in result %}
             <tr>

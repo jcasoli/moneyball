@@ -4,14 +4,12 @@ import sys
 
 import defaults
 
-from datetime import date
+from datetime import datetime
 
 class Test:
 
-    def __init__(self, date, factor_list=defaults.F_FACTORS):
+    def __init__(self, factor_list=defaults.F_FACTORS):
         self.factors = factor_list
-        self.datetimeobj = date
-        self.date = self._get_str_date(date)
         try:
             self.conn = apiconnect.Connection()
         except:
@@ -25,9 +23,9 @@ class Test:
         except Exception as e:
             print e
 
-    def _get_todays_games(self):
+    def _get_todays_games(self, date):
         """returns dictionary formatted list of games """
-        return json.loads(self.conn.get_games_by_date(self.date))
+        return json.loads(self.conn.get_games_by_date(date))
 
     def _get_player_by_id(self, playerid):
         """
@@ -36,13 +34,12 @@ class Test:
         """
         player = json.loads(self.conn.get_player_details_by_player(playerid))
 
-    def _get_str_date(self, datetime):
+    def _get_str_date(self, dt):
         """
-
         :param datetime: datetime object
         :return: string 'dd-mm-yyyy'
         """
-        return '07-07-2015'
+        return dt.strftime('%m-%d-%Y')
 
     def _get_stadium_by_id(self, stadiumid):
         """
@@ -51,14 +48,14 @@ class Test:
         """
         return None
 
-    def run(self):
+    def run(self, dt):
         """ Runs through all specified factors and returns a dictionary of results with factor names as keys """
         results = []
 
         heat_rating_dict = dict.fromkeys(defaults.FACTORS)
 
         # Get dictionary version of todays games from the fantasy data api
-        days_games = self._get_todays_games()
+        days_games = self._get_todays_games(self._get_str_date(dt))
 
 
         # Populate matchup dictionary by running through every matchup. This is the main computation
@@ -71,7 +68,7 @@ class Test:
             for factor in self.factors:
 
                 # Compute result for current test factor
-                heat_rating_dict[factor.func_name] = factor(game['HomeTeam'], game['AwayTeam'], self.conn, self.datetimeobj)
+                heat_rating_dict[factor.func_name] = factor(game['HomeTeam'], game['AwayTeam'], self.conn, dt)
 
             matchup[defaults.HEATRATING] = heat_rating_dict
             matchup[defaults.STADIUM] = self._get_stadium_by_id(game['StadiumID'])
@@ -87,5 +84,5 @@ class Test:
 
 
 if __name__ == "__main__":
-    fact = Test(date.now())
-    fact.run()
+    fact = Test()
+    fact.run(datetime.now())
