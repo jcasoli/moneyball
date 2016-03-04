@@ -1,37 +1,82 @@
+from __future__ import division
 import apiconnect
 import httplib, urllib
 import datetime
 from datetime import date, timedelta
 import json
 
-today = datetime.date(2014, 5, 25)
+
+today = datetime.date(2015, 5, 2)
 todayString = '%s-%s-%s' % (today.year, today.month, today.day)
 conn = apiconnect.Connection()
 key = '0deb8f835f264ad99e24cc3622aeb396'
 
 def against_lefties(homeTeam, awayTeam, conn, date):
 
-    firstDayOfSeason = datetime.date(2014, 4, 3)
+    firstDayOfSeason = datetime.date(2015, 4, 5)
     currentDate = date
     daysSinceOpener = currentDate - firstDayOfSeason
     daysSinceOpenerInt = daysSinceOpener.days
     dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
 
     currentDate = date
+    battingOrder = get_batting_order(homeTeam, conn, dateString)
     dayCounter = 0
     hitsAgainstRighty = 0
-    while (dayCounter < daysSinceOpenerInt):
-        x = game_performance(homeTeam, conn, dateString, 10001319)
-        if x!=None:
-            hitsAgainstRighty = hitsAgainstRighty+x
-        currentDate = currentDate - timedelta(days=1.0)
-        dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
-        dayCounter = dayCounter+1
-    print('Hits against Righty: %s') %(hitsAgainstRighty)
+    ABlistTotal = [0, 0, 0, 0]
+    holder = 0
+    ABlistTotalTeam = [0, 0, 0, 0]
+    while holder < len(battingOrder):
+        ABlistTotal = [0, 0, 0, 0]
+        dayCounter = 0
+        currentDate = date
+        averageAgainstRighty = 0
+        averageAgainstLefty = 0
+        while (dayCounter < daysSinceOpenerInt):
+            x = game_performance(homeTeam, conn, dateString, battingOrder[holder])
+            if x!=None:
+                ABlistTotal[0]=ABlistTotal[0]+x[0]
+                ABlistTotal[1]=ABlistTotal[1]+x[1]
+                ABlistTotal[2]=ABlistTotal[2]+x[2]
+                ABlistTotal[3]=ABlistTotal[3]+x[3]
+                ABlistTotalTeam[0]=ABlistTotalTeam[0]+x[0]
+                ABlistTotalTeam[1]=ABlistTotalTeam[1]+x[1]
+                ABlistTotalTeam[2]=ABlistTotalTeam[2]+x[2]
+                ABlistTotalTeam[3]=ABlistTotalTeam[3]+x[3]
+            currentDate = currentDate - timedelta(days=1.0)
+            dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
+            dayCounter = dayCounter+1
+        if ABlistTotal[0]+ABlistTotal[1]>0:
+            averageAgainstRighty = ABlistTotal[0]/(ABlistTotal[0]+ABlistTotal[1])
+        if ABlistTotal[2]+ABlistTotal[3]:
+            averageAgainstLefty = ABlistTotal[2]/(ABlistTotal[2]+ABlistTotal[3])
+        print('Hits against Righty: %s') %ABlistTotal[0]
+        print('Batting Against Right: %s') %(averageAgainstRighty)
+        print('Batting Against Left: %s') %(averageAgainstLefty)
+        holder = holder+1
+    teamAverageAgainstRighty = ABlistTotalTeam[0]/(ABlistTotalTeam[0]+ABlistTotalTeam[1])
+    teamAverageAgainstLefty = ABlistTotalTeam[2]/(ABlistTotalTeam[2]+ABlistTotalTeam[3])
+    print 'Team is batting %s against righties' %(teamAverageAgainstRighty)
+    print 'Team is batting %s against lefties' %(teamAverageAgainstLefty)
+
+
 def get_batting_order(team, conn, date):
-    data = conn.get_projected_player_game_stats_by_date(date)
-    #check if team matches, check batting order, input playerID into lineupAray
+    data = conn.get_player_game_stats_by_date(date)
     jn = json.loads(data)
+    length = len(jn)
+    battingOrder = [None]*9
+    battingOrderName = [None]*9
+    x = 0
+    while x < length:
+        if jn[x]['Team'] == team:
+            order = (jn[x]['BattingOrder'])
+            if order>0 and order<10:
+                order = order-1
+                battingOrder[order] = jn[x]['PlayerID']
+                battingOrderName[order] = jn[x]['Name']
+        x = x+1
+    print battingOrderName
+    return battingOrder
    #for index, key in enumerate(jn):
        # if jn[index]['Team'] == team:
        #     pass
@@ -58,6 +103,8 @@ def game_performance(team, conn, date, playerID):
     hitsAgainstRighty = 0
     hitsAgainstLefty = 0
     outsAgainstLefty = 0
+    ABlist = []
+    print len(ABlist)
     x=0
     for index2, key2 in enumerate(jn2):
         print 'index2: %s' %(index2)
@@ -79,10 +126,14 @@ def game_performance(team, conn, date, playerID):
                     if didOut == True or didStrikeout == True:
                         outsAgainstLefty = outsAgainstLefty +1
              x = x+1
+    ABlist.append(hitsAgainstRighty)
+    ABlist.append(outsAgainstRighty)
+    ABlist.append(hitsAgainstLefty)
+    ABlist.append(outsAgainstLefty)
     print 'had %s hits against right handers' %(hitsAgainstRighty)
     print 'had %s outs against right handers' %(outsAgainstRighty)
     print 'had %s hits against left handers' %(hitsAgainstLefty)
     print 'had %s outs against left handers' %(outsAgainstLefty)
-    return hitsAgainstRighty
+    return ABlist
 if __name__ == "__main__":
-    against_lefties("TOR", "SF", conn, today)
+    against_lefties("TOR", "BOS", conn, today)
