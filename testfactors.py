@@ -1,6 +1,7 @@
 import apiconnect
 import json
 import sys
+from operator import itemgetter
 
 import defaults
 
@@ -64,22 +65,31 @@ class Test:
             # Initialize matchup dict. It will contain results from each game played today
             matchup = dict.fromkeys(defaults.GAME_KEYS)
 
+            # Each matchup has a heatrating calculated for it depending on which way we think the
+            heat_rating = 0
             # Run through every test in results.py and store result in dict
             for factor in self.factors:
 
                 # Compute result for current test factor
-                heat_rating_dict[factor.func_name] = factor(game['HomeTeam'], game['AwayTeam'], self.conn, dt)
+                heat_rating_dict[factor.func_name], rating = factor(game['HomeTeam'], game['AwayTeam'], self.conn, dt)
 
-            matchup[defaults.HEATRATING] = heat_rating_dict
+                # Add current factors rating to heat_rating
+                heat_rating += rating
+
+            matchup[defaults.HEATRATING] = heat_rating
+            matchup[defaults.HEATRATINGDICT] = heat_rating_dict
             matchup[defaults.STADIUM] = self._get_stadium_by_id(game['StadiumID'])
             matchup[defaults.AWAYTEAM] = game['AwayTeam']
             matchup[defaults.HOMETEAM] = game['HomeTeam']
-            matchup[defaults.DATETIME] = game['DateTime']
+            matchup[defaults.DATETIME] = game['DateTime'].split('T')[1]
             matchup[defaults.AWAYTEAMPROBABLEPITCHER] = game['AwayTeamProbablePitcherID']
             matchup[defaults.HOMETEAMPROBABLEPITCHER] = game['HomeTeamProbablePitcherID']
+            matchup[defaults.GAMEID] = game['GameID']
             results.append(matchup)
 
-        return results
+        # Sort results by how much we feel each game will be swayed.
+        sorted_results = sorted(results, key=itemgetter(defaults.HEATRATING))
+        return sorted_results
 
 
 

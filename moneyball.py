@@ -11,10 +11,11 @@ app.secret_key = "moneyball"
 
 @app.route("/")
 def home():
-    return "Hello World"
+    return redirect(url_for('login'))
 
 @app.route("/welcome", methods=['GET', 'POST'])
 def welcome():
+    global result
     test = testfactors.Test()
     result = test.run(datetime.datetime.now())
     form = forms.DateForm()
@@ -24,6 +25,11 @@ def welcome():
         return render_template('welcome.html', result=result, form=form)
     return render_template('welcome.html', result=result, form=form)
 
+@app.route("/results")
+def results():
+    gameid = request.args.get('gameid').encode('ascii', 'ignore')
+    game = [match for match in result if str(match['GameID'])==gameid]
+    return render_template('results.html', game=game[0])
 
 
 #route for handling the login page logic
@@ -39,4 +45,5 @@ def login():
 
 
 if __name__ == "__main__":
+    global result
     app.run(debug=True)

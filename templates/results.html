@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/welcome.css" rel="stylesheet" media="screen">
+    <title>Results | MoneyBall</title>
+</head>
+<body>
+    <table>
+        {% for key, value in game.iteritems() %}
+            <tr>
+                <th> {{ key }} </th>
+                <td> {{ value }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <button onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+        window.history.back();
+        }
+    </script>
+</body>
+</html>

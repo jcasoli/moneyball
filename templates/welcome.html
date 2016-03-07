@@ -16,15 +16,15 @@
         </form>
         <table>
             {% for matchup in result %}
-            <tr>
+            <tr onclick="location.href = 'http://127.0.0.1:5000/results?gameid={{ matchup['GameID'] }}'">
                 <th> {{ matchup['HomeTeam'] }} vs. {{ matchup['AwayTeam'] }}</th>
                 <td> {{ matchup['DateTime'] }} </td>
                 <td> {{ matchup['HomeTeamProbablePitcher'] }} </td>
                 <td> {{ matchup['AwayTeamProbablePitcher'] }} </td>
+                <td> {{ matchup['HeatRating'] }}</td>
             </tr>
             {% endfor %}
         </table>
-      <p>Click <a href="/">here</a> to go home.</p>
     </div>
   </body>
 </html>

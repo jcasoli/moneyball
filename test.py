@@ -1,12 +1,12 @@
 def test_1(team1, team2, conn, date):
-    return 5, "Win streak of 5 games"
+    return "Win streak of 5 games", 9
 
 def test_2(team1, team2, conn, date):
-    return 3, "you are a snitch"
+    return "you are a snitch", 7
 
 def test_3(team1, team2, conn, date):
-    return 1, "Long road trip"
+    return "Long road trip", -1
 
 def test_4(team1, team2, conn, date):
-    return 10, "missing star player"
+    return "missing star player", -4
 
