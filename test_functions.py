@@ -10,36 +10,36 @@ import json
 # conn = apiconnect.Connection()
 # key = '0deb8f835f264ad99e24cc3622aeb396'
 
-def test_win_streak(homeTeam, awayTeam, conn, date):
-    streak1 = 0
-    streak2 = 0
-    currentDate = date
-    dateString = '%s-%s-%s' % (date.year, date.month, date.day)
-    if (date.month<10 and date.day<10):
-         dateString = '%s-0%s-0%s' % (date.year, date.month, date.day)
-    if (date.month<10 and date.day>9):
-         dateString = '%s-0%s-%s' % (date.year, date.month, date.day)
-    if (date.month>9 and date.day<10):
-         dateString = '%s-%s-%s' % (date.year, date.month, date.day)
-
-#       Check Away Team Streak
-    x = didWin(homeTeam, conn, dateString)
-    while (x<2):
-        if x == 1:
-            streak1 = streak1 + 1
-        currentDate = currentDate - timedelta(days=1.0)
-        dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
-        x = didWin(homeTeam, conn, dateString)
-    currentDate = date
-    dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
-    x = didWin(awayTeam, conn, dateString)
-    while (x<2):
-        if x == 1:
-            streak2 = streak2 + 1
-        currentDate = currentDate - timedelta(days=1.0)
-        dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
-        x = didWin(awayTeam, conn, dateString)
-    return "%s win streak is at %s, %s win streak is at %s" % (homeTeam, streak1, awayTeam, streak2)
+# def test_win_streak(homeTeam, awayTeam, conn, date):
+#     streak1 = 0
+#     streak2 = 0
+#     currentDate = date
+#     dateString = '%s-%s-%s' % (date.year, date.month, date.day)
+#     if (date.month<10 and date.day<10):
+#          dateString = '%s-0%s-0%s' % (date.year, date.month, date.day)
+#     if (date.month<10 and date.day>9):
+#          dateString = '%s-0%s-%s' % (date.year, date.month, date.day)
+#     if (date.month>9 and date.day<10):
+#          dateString = '%s-%s-%s' % (date.year, date.month, date.day)
+#
+# #       Check Away Team Streak
+#     x = didWin(homeTeam, conn, dateString)
+#     while (x<2):
+#         if x == 1:
+#             streak1 = streak1 + 1
+#         currentDate = currentDate - timedelta(days=1.0)
+#         dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
+#         x = didWin(homeTeam, conn, dateString)
+#     currentDate = date
+#     dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
+#     x = didWin(awayTeam, conn, dateString)
+#     while (x<2):
+#         if x == 1:
+#             streak2 = streak2 + 1
+#         currentDate = currentDate - timedelta(days=1.0)
+#         dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
+#         x = didWin(awayTeam, conn, dateString)
+#     return "%s win streak is at %s, %s win streak is at %s" % (homeTeam, streak1, awayTeam, streak2), 5
 
 def test_pitching_today(homeTeam, awayTeam, conn, date,):
     homePitcher = ''
@@ -52,7 +52,7 @@ def test_pitching_today(homeTeam, awayTeam, conn, date,):
             homePitcher = dict['HomeTeamProbablePitcherID']
         if dict['AwayTeam'] == awayTeam:
             awayPitcher = dict['AwayTeamProbablePitcherID']
-    return '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam)
+    return '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam), -3
 
 def test_trip_length(homeTeam, awayTeam, conn, date):
     currentDate = date
@@ -69,7 +69,7 @@ def test_trip_length(homeTeam, awayTeam, conn, date):
         currentDate = currentDate - timedelta(days=1.0)
         dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
         x = isAway(conn, dateString, awayTeam)
-    return '%s on %s game of road trip' %(awayTeam, length)
+    return '%s on %s game of road trip' %(awayTeam, length), 7
 
 def didWin(team_id1, conn, date):
     data = conn.get_games_by_date(date)
@@ -100,8 +100,8 @@ def isAway(conn, date, team):
     return holder
 
 if __name__ == "__main__" :
-
-    test_pitching_today("HOU", "TOR", conn, today)
-    test_trip_length("HOU", "TOR", conn, today)
-    test_win_streak("HOU", "TOR", conn, today)
+    pass
+    # test_pitching_today("HOU", "TOR", conn, today)
+    # test_trip_length("HOU", "TOR", conn, today)
+    # test_win_streak("HOU", "TOR", conn, today)
 
