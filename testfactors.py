@@ -42,12 +42,22 @@ class Test:
         """
         return dt.strftime('%m-%d-%Y')
 
+    def _get_formatted_date(self, date_string_24hr):
+        """
+
+        :param date_string_24hr: 24 hour date string
+        :return: 12 hour date string
+        """
+        d = datetime.strptime(date_string_24hr, "%H:%M:%S")
+        return d.strftime("%-I:%M %p")
+
     def _get_stadium_by_id(self, stadiumid):
         """
         :param stadiumid: stadium_id
         :return: Stadium Name (string)
         """
         return None
+
 
     def run(self, dt):
         """ Runs through all specified factors and returns a dictionary of results with factor names as keys """
@@ -81,7 +91,7 @@ class Test:
             matchup[defaults.STADIUM] = self._get_stadium_by_id(game['StadiumID'])
             matchup[defaults.AWAYTEAM] = game['AwayTeam']
             matchup[defaults.HOMETEAM] = game['HomeTeam']
-            matchup[defaults.DATETIME] = game['DateTime'].split('T')[1]
+            matchup[defaults.DATETIME] = self._get_formatted_date(game['DateTime'].split('T')[1])
             matchup[defaults.AWAYTEAMPROBABLEPITCHER] = game['AwayTeamProbablePitcherID']
             matchup[defaults.HOMETEAMPROBABLEPITCHER] = game['HomeTeamProbablePitcherID']
             matchup[defaults.GAMEID] = game['GameID']

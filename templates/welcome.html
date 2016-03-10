@@ -2,23 +2,27 @@
 <html>
   <head>
     <title>Welcome to Moneyball</title>
+      <link rel='shortcut icon' href='/static/img/favicon.png' type='image/x-icon' >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="static/welcome.css" rel="stylesheet" media="screen">
   </head>
   <body>
     <div class="container">
-      <h1>Welcome to Moneyball!</h1>
       <br>
-        <table>
-            {% for matchup in result %}
-            <tr onclick="location.href = 'http://127.0.0.1:5000/results?gameid={{ matchup['GameID'] }}'">
-                <th> {{ matchup['HomeTeam'] }} vs. {{ matchup['AwayTeam'] }}</th>
-                <td> {{ matchup['DateTime'] }} </td>
-                <td> {{ matchup['HomeTeamProbablePitcher'] }} </td>
-                <td> {{ matchup['AwayTeamProbablePitcher'] }} </td>
-                <td> {{ matchup['HeatRating'] }}</td>
+
+        <table style="width:100%">
+            <tr>
+                <th>Home vs. Away</th>
+                <th>Time</th>
+                <th>Rating</th>
             </tr>
-            {% endfor %}
+            {%  for matchup in result %}
+                <tr class="clickable" onclick="location.href = 'http://127.0.0.1:5000/results?gameid={{ matchup['GameID'] }}'">
+                    <td>{{ matchup['HomeTeam'] }} vs. {{ matchup['AwayTeam'] }}</td>
+                    <td>{{ matchup['DateTime'] }}</td>
+                    <td>{{ matchup['HeatRating'] }}</td>
+                </tr>
+            {%  endfor %}
         </table>
     </div>
   </body>

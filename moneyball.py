@@ -19,7 +19,7 @@ def process():
     result = test.run(datetime.datetime(2015, 8, 19))
 
 
-
+# home route that immediately redirects to the login page
 @app.route("/")
 def home():
     # Go directly to login page
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     global result
     result = []
     scheduler = BackgroundScheduler()
-    scheduler.add_job(process, 'interval', minutes=1)
+    scheduler.add_job(process, 'interval', seconds=1)
     scheduler.start()
     try:
         app.run(debug=True)
