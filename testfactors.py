@@ -10,6 +10,11 @@ from datetime import datetime
 class Test:
 
     def __init__(self, factor_list=defaults.F_FACTORS):
+        """
+        Constructor for Test class, responsible for running main analysis
+        :param factor_list: A possible list of input factors to be considered
+        :return: Test class
+        """
         self.factors = factor_list
         try:
             self.conn = apiconnect.Connection()
@@ -19,24 +24,35 @@ class Test:
         self.stadiums = self.conn.get_stadiums()
 
     def __del__(self):
+        """
+        Destructor for Test class, responsible for closing api connection
+        :return:
+        """
         try:
             self.conn.close_connection()
         except Exception as e:
             print e
 
     def _get_todays_games(self, date):
-        """returns dictionary formatted list of games """
+        """
+        Calls api to get list of todays games
+        :param date: string date
+        :return: list of todays games, dictionary format
+        """
         return json.loads(self.conn.get_games_by_date(date))
 
     def _get_player_by_id(self, playerid):
         """
+        DONT THINK THIS IS FINISHED
         :param playerid: player_id
         :return: Actual Player Name (string)
         """
         player = json.loads(self.conn.get_player_details_by_player(playerid))
 
+
     def _get_str_date(self, dt):
         """
+        returns a string version of a datetime object
         :param datetime: datetime object
         :return: string 'dd-mm-yyyy'
         """
@@ -44,7 +60,7 @@ class Test:
 
     def _get_formatted_date(self, date_string_24hr):
         """
-
+        takes a 24 hour time and returns time in 12 hour format
         :param date_string_24hr: 24 hour date string
         :return: 12 hour date string
         """
@@ -53,6 +69,7 @@ class Test:
 
     def _get_stadium_by_id(self, stadiumid):
         """
+        NOT FINISHED
         :param stadiumid: stadium_id
         :return: Stadium Name (string)
         """

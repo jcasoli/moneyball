@@ -19,6 +19,7 @@ HEATRATING = 'HeatRating'
 HEATRATINGDICT = 'HeatRatingDict'
 GAMEID = 'GameID'
 
+# Key values for dictionary that is produced for each game on a given night
 GAME_KEYS = [HOMETEAM, AWAYTEAM, DATETIME, HOMETEAMPROBABLEPITCHER, AWAYTEAMPROBABLEPITCHER, STADIUM, HEATRATING,
              HEATRATINGDICT, GAMEID]
 

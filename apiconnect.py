@@ -28,12 +28,19 @@ get_team_season_stats = 'TeamSeasonStats'
 get_play_by_play = 'PlayByPlay'
 
 class Connection:
+    """
+    This class handles all interfacing with fantasydata.com
+    """
     OcpApimSubscriptionKey = '0deb8f835f264ad99e24cc3622aeb396'
     OcpApimSubscriptionKey2 = '826b7999d438456cb2f53cef2772513e'
     http_loc = 'api.fantasydata.net'
     mlb_path = '/mlb/v2/JSON/'
 
     def __init__(self):
+        """
+        Contstructor for api connection class (fantasydata.com)
+        :return: Instance of Connection
+        """
         try:
             self.conn = httplib.HTTPSConnection('api.fantasydata.net')
         except Exception as e:
@@ -222,14 +229,32 @@ class Connection:
             return None
 
     def _get_data(self, request_type, params=()):
+        """
+        General function for polling fantasydata api. Returns json formatted data
+        :param request_type: The type of request. Ex: 'GetPlayByPlay'
+        :param params: extra parameters like date, playerid, etc
+        :return: json formatted api data
+        """
+
+        # Create request url
         request_url = self._create_request_url(request_type, params)
+
+        # Poll api
         self.conn.request("GET", request_url)
         response = self.conn.getresponse()
         data = response.read()
         return data
 
     def _create_request_url(self, request, parameters):
+        """
+        General function for creating a url for polling fantasydata.com
+        :param request: The type of request. Ex: 'GetPlayByPlay'
+        :param parameters: extra parameters like date, playerid, etc
+        :return: a url string that we will generate request for
+        """
         base = self.mlb_path + request
+
+        # Check whether there are any parameters
         if len(parameters) > 0:
             url = base + "/" + "/".join(parameters) + "?key=" + Connection.OcpApimSubscriptionKey
         else:
@@ -238,6 +263,9 @@ class Connection:
 
 
     def close_connection(self):
+        """
+        Close connection to api
+        """
         self.conn.close()
 
 
