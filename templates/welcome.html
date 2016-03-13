@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Welcome to Moneyball</title>
-      <link rel='shortcut icon' href='/static/img/favicon.png' type='image/x-icon' >
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="static/welcome.css" rel="stylesheet" media="screen">
-  </head>
-  <body>
+{%  extends "index.html" %}
+{% block title %}
+    Home | Moneyball
+{% endblock %}
+{% block body %}
     <div class="container">
       <br>
 
@@ -25,5 +21,4 @@
             {%  endfor %}
         </table>
     </div>
-  </body>
-</html>
+{% endblock %}
