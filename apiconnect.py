@@ -59,7 +59,7 @@ class Connection:
         try:
             return self._get_data(get_are_games_in_progress)
         except Exception as e:
-            print "warning: could not get active teams"
+            print "warning: could not get are games in progress"
             return None
 
 
@@ -67,28 +67,28 @@ class Connection:
         try:
             return self._get_data(get_box_score, [gameid])
         except Exception as e:
-            print "warning: could not get active teams"
+            print "warning: could not get box score"
             return None
 
     def get_box_scores_by_date(self, date):
         try:
             return self._get_data(get_box_scores_by_date, [date])
         except Exception as e:
-            print "warning: could not get active teams"
+            print "warning: could not get box scores by date"
             return None
 
     def get_box_scores_by_date_delta(self, date, delta):
         try:
             return self._get_data(get_box_scores_by_date_delta, [date, delta])
         except Exception as e:
-            print "warning: could not get active teams"
+            print "warning: could not get box scores by date delta"
             return None
 
     def get_games_by_date(self, date):
         try:
             return self._get_data(get_games_by_date, [date])
         except Exception as e:
-            print "warning: could not get active teams"
+            print "warning: could not get games by date"
             return None
 
     def get_news(self):
@@ -102,7 +102,7 @@ class Connection:
         try:
             return self._get_data(get_news_by_date, [date])
         except Exception as e:
-            print "warning: could not get news"
+            print "warning: could not get news by date"
             return None
 
     def get_news_by_player(self, playerid):
@@ -116,14 +116,14 @@ class Connection:
         try:
             return self._get_data(get_player_details_by_active)
         except Exception as e:
-            print "warning: could not get news by player"
+            print "warning: could not get player details by active"
             return None
 
     def get_player_details_by_free_agents(self):
         try:
             return self._get_data(get_player_details_by_free_agent)
         except Exception as e:
-            print "warning: could not get news by player"
+            print "warning: could not get player details by free agents"
             return None
 
 
@@ -131,7 +131,7 @@ class Connection:
         try:
             return self._get_data(get_player_details_by_player, [playerid])
         except Exception as e:
-            print "warning: could not get news by player"
+            print "warning: could not player details by player"
             return None
 
 
@@ -161,14 +161,14 @@ class Connection:
         try:
             return self._get_data(get_season_stats_by_player, [season, str(playerid)])
         except Exception as e:
-            print "warning: could not get player game stats by date"
+            print "warning: could not get season stats by player"
             return None
 
     def get_player_season_stats_by_team(self, season, team):
         try:
             return self._get_data(get_player_season_stats_by_team, [season, team])
         except Exception as e:
-            print "warning: could not get player game stats by date"
+            print "warning: could not get player season stats by team"
             return None
 
 
@@ -176,7 +176,7 @@ class Connection:
         try:
             return self._get_data(get_players_by_team, [team])
         except Exception as e:
-            print "warning: could not get player game stats by date"
+            print "warning: could not get players by team"
             return None
 
     def get_projected_player_game_stats_by_date(self, date):
@@ -190,35 +190,35 @@ class Connection:
         try:
             return self._get_data(get_projected_player_game_stats_by_player, [date, str(playerid)])
         except Exception as e:
-            print "warning: could not get player game stats by date"
+            print "warning: could not get player game stats by player"
             return None
 
     def get_schedules(self, season):
         try:
             return self._get_data(get_schedules, [season])
         except Exception as e:
-            print "warning: could not get player game stats by date"
+            print "warning: could not get schedules"
             return None
 
     def get_stadiums(self):
         try:
             return self._get_data(get_stadiums)
         except Exception as e:
-            print "warning: could not get player game stats by date"
+            print "warning: could not get stadiums"
             return None
 
     def get_team_game_stats_by_date(self, date):
         try:
             return self._get_data(get_team_game_stats_by_date, [date])
         except Exception as e:
-            print "warning: could not get player game stats by date"
+            print "warning: could not get team game stats by date"
             return None
 
     def get_team_season_stats(self, season):
         try:
             return self._get_data(get_team_season_stats, [season])
         except Exception as e:
-            print "warning: could not get player game stats by date"
+            print "warning: could not get team season stats"
             return None
 
     def get_play_by_play(self, gameid):

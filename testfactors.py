@@ -47,8 +47,12 @@ class Test:
         :param playerid: player_id
         :return: Actual Player Name (string)
         """
-        player = json.loads(self.conn.get_player_details_by_player(playerid))
+        try:
+            player = json.loads(self.conn.get_player_details_by_player(str(playerid)))
+        except:
+            return playerid
 
+        return player['FirstName'] + player['LastName']
 
     def _get_str_date(self, dt):
         """
@@ -109,8 +113,8 @@ class Test:
             matchup[defaults.AWAYTEAM] = game['AwayTeam']
             matchup[defaults.HOMETEAM] = game['HomeTeam']
             matchup[defaults.DATETIME] = self._get_formatted_date(game['DateTime'].split('T')[1])
-            matchup[defaults.AWAYTEAMPROBABLEPITCHER] = game['AwayTeamProbablePitcherID']
-            matchup[defaults.HOMETEAMPROBABLEPITCHER] = game['HomeTeamProbablePitcherID']
+            matchup[defaults.AWAYTEAMPROBABLEPITCHER] = self._get_player_by_id(game['AwayTeamProbablePitcherID'])
+            matchup[defaults.HOMETEAMPROBABLEPITCHER] = self._get_player_by_id(game['HomeTeamProbablePitcherID'])
             matchup[defaults.GAMEID] = game['GameID']
             results.append(matchup)
 
