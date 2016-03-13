@@ -3,6 +3,7 @@
     Results | Moneyball
 {% endblock %}
 {% block body %}
+    <h1 class="results_header">{{ game['HomeTeam'] }} vs. {{ game['AwayTeam'] }} @ {{ game['DateTime'] }}</h1>
     <div class="container">
         <table>
             {% for key, value in game.iteritems() %}
