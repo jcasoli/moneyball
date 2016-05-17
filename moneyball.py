@@ -86,6 +86,6 @@ if __name__ == "__main__":
     scheduler.add_job(process, 'interval', seconds=1)
     scheduler.start()
     try:
-        app.run(debug=True)
+        app.run()
     except Exception as e:
         scheduler.shutdown()

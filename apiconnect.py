@@ -271,7 +271,7 @@ class Connection:
 
 if __name__ == '__main__':
     conn = Connection()
-    data = conn.get_games_by_date('07-07-2015')
+    data = conn.get_stadiums()
     data2 = conn.get_projected_player_game_stats_by_date('07-07-2015')
     data3 = conn.get_play_by_play(18373)
     pass

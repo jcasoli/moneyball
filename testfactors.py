@@ -16,12 +16,14 @@ class Test:
         :return: Test class
         """
         self.factors = factor_list
+
         try:
             self.conn = apiconnect.Connection()
         except:
             print("Could not open api connection. Will Exit")
             sys.exit(0)
         self.stadiums = self.conn.get_stadiums()
+        i = 1
 
     def __del__(self):
         """
@@ -77,6 +79,9 @@ class Test:
         :param stadiumid: stadium_id
         :return: Stadium Name (string)
         """
+        pass
+        (item for item in self.stadiums if item["name"] == "Pam").next()
+        a = self.stadiums
         return None
 
 
@@ -109,7 +114,8 @@ class Test:
 
             matchup[defaults.HEATRATING] = heat_rating
             matchup[defaults.HEATRATINGDICT] = heat_rating_dict
-            matchup[defaults.STADIUM] = self._get_stadium_by_id(game['StadiumID'])
+#            matchup[defaults.STADIUM] = self._get_stadium_by_id(game['StadiumID'])
+            matchup[defaults.STADIUM] = game['StadiumID']
             matchup[defaults.AWAYTEAM] = game['AwayTeam']
             matchup[defaults.HOMETEAM] = game['HomeTeam']
             matchup[defaults.DATETIME] = self._get_formatted_date(game['DateTime'].split('T')[1])
