@@ -37,7 +37,7 @@ def test_win_streak(homeTeam, awayTeam, conn, date):
         dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
         x = didWin(awayTeam, conn, dateString)
     print "%s win streak is at %s, %s win streak is at %s" % (homeTeam, streak1, awayTeam, streak2)
-    return "%s win streak is at %s, %s win streak is at %s" % (homeTeam, streak1, awayTeam, streak2)
+    return "%s win streak is at %s, %s win streak is at %s" % (homeTeam, streak1, awayTeam, streak2), 4
 
 
 def test_pitching_today(homeTeam, awayTeam, conn, date,):
@@ -71,7 +71,7 @@ def test_pitching_today(homeTeam, awayTeam, conn, date,):
 
 
     print '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam)
-    return '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam)
+    return '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam), 4
 
 
 def test_trip_length(homeTeam, awayTeam, conn, date):
@@ -90,7 +90,7 @@ def test_trip_length(homeTeam, awayTeam, conn, date):
         dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
         x = isAway(conn, dateString, awayTeam)
     print '%s on %s game of road trip' %(awayTeam, length)
-    return '%s on %s game of road trip' %(awayTeam, length)
+    return '%s on %s game of road trip' %(awayTeam, length), 3
 
 
 def test_batter_performance(homeTeam, awayTeam, conn, date, gameID):
@@ -157,7 +157,7 @@ def test_batter_performance(homeTeam, awayTeam, conn, date, gameID):
     teamAverageAgainstLeft = teamHitsAgainstLeft/(teamHitsAgainstLeft+teamOutsAgainstLeft)
     print '%s Team has %s hits against righties and is batting %s' %(awayTeam, teamHitsAgainstRight, teamAverageAgainstRight)
     print '%s Team has %s hits against lefties and is batting %s' %(awayTeam, teamHitsAgainstLeft, teamAverageAgainstLeft)
-    return '%s Team has %s hits against righties and is batting %s' %(awayTeam, teamHitsAgainstRight, teamAverageAgainstRight)
+    return '%s Team has %s hits against righties and is batting %s' %(awayTeam, teamHitsAgainstRight, teamAverageAgainstRight),2
 
 def didWin(team_id1, conn, date):
     data = conn.get_games_by_date(date)
