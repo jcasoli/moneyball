@@ -28,9 +28,29 @@ def pitching_today(conn, date, homeTeam, awayTeam):
     jn = json.loads(data)
     for dict in jn:
         if dict['HomeTeam'] == homeTeam:
-            homePitcher = dict['HomeTeamProbablePitcherID']
+            homePitcherID = dict['HomeTeamProbablePitcherID']
         if dict['AwayTeam'] == awayTeam:
-            awayPitcher = dict['AwayTeamProbablePitcherID']
+            awayPitcherID = dict['AwayTeamProbablePitcherID']
+    data1 = conn.get_player_details_by_player(homePitcherID)
+    jn2 = json.loads(data1)
+    homePitcherHand = ''
+    awayPitcherHand = ''
+
+    for dict2 in jn2:
+        if dict['ThrowHand']=='R':
+            homePitcherHand = 'Right'
+        else:
+            homePitcherHand = 'Left'
+        homePitcher = dict['LastName']
+        data1 = conn.get_player_details_by_player(homePitcherID)
+    jn2 = json.loads(data1)
+    for dict2 in jn2:
+        if dict['ThrowHand']=='R':
+            awayPitcherHand = 'Right'
+        else:
+            awayPitcherHand = 'Left'
+        awayPitcher = dict['LastName']
+
     print '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam)
 
 if __name__ == "__main__":

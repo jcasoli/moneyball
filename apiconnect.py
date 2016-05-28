@@ -29,6 +29,7 @@ get_play_by_play = 'PlayByPlay'
 
 class Connection:
     OcpApimSubscriptionKey = '0deb8f835f264ad99e24cc3622aeb396'
+    OcpApimSubscriptionKey2 = '826b7999d438456cb2f53cef2772513e'
     http_loc = 'api.fantasydata.net'
     mlb_path = '/mlb/v2/JSON/'
 

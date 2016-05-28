@@ -11,7 +11,7 @@ todayString = '%s-%s-%s' % (today.year, today.month, today.day)
 conn = apiconnect.Connection()
 key = '0deb8f835f264ad99e24cc3622aeb396'
 
-def against_lefties(homeTeam, awayTeam, conn, date):
+def against_lefties(homeTeam, awayTeam, conn, date, gameID):
 
     firstDayOfSeason = datetime.date(2015, 4, 5)
     currentDate = date
@@ -26,6 +26,7 @@ def against_lefties(homeTeam, awayTeam, conn, date):
     ABlistTotal = [0, 0, 0, 0]
     holder = 0
     ABlistTotalTeam = [0, 0, 0, 0]
+
     while holder < len(battingOrder):
         ABlistTotal = [0, 0, 0, 0]
         dayCounter = 0
@@ -58,6 +59,8 @@ def against_lefties(homeTeam, awayTeam, conn, date):
     teamAverageAgainstLefty = ABlistTotalTeam[2]/(ABlistTotalTeam[2]+ABlistTotalTeam[3])
     print 'Team is batting %s against righties' %(teamAverageAgainstRighty)
     print 'Team is batting %s against lefties' %(teamAverageAgainstLefty)
+    print 'Team hits against righty %s' %(ABlistTotalTeam[0])
+    print 'Team outs against righty %s' %(ABlistTotalTeam[1])
 
 
 def get_batting_order(team, conn, date):
@@ -112,6 +115,7 @@ def game_performance(team, conn, date, playerID):
              if (jn2['Plays'][x]['HitterID']==playerID):
                 print jn2['Plays'][x]['HitterName']
                 throwHand = jn2['Plays'][x]['PitcherThrowHand']
+                print jn2['Game']['HomeTeam']
                 didOut = jn2['Plays'][x]['Out']
                 didHit = jn2['Plays'][x]['Hit']
                 didStrikeout = jn2['Plays'][x]['Strikeout']
@@ -131,9 +135,9 @@ def game_performance(team, conn, date, playerID):
     ABlist.append(hitsAgainstLefty)
     ABlist.append(outsAgainstLefty)
     print 'had %s hits against right handers' %(hitsAgainstRighty)
-    print 'had %s outs against right handers' %(outsAgainstRighty)
-    print 'had %s hits against left handers' %(hitsAgainstLefty)
-    print 'had %s outs against left handers' %(outsAgainstLefty)
+#    print 'had %s outs against right handers' %(outsAgainstRighty)
+#    print 'had %s hits against left handers' %(hitsAgainstLefty)
+#    print 'had %s outs against left handers' %(outsAgainstLefty)
     return ABlist
 if __name__ == "__main__":
-    against_lefties("TOR", "BOS", conn, today)
+    against_lefties("TOR", "BOS", conn, today, 17468)
