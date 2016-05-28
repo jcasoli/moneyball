@@ -111,7 +111,7 @@ class Test:
             for factor in self.factors:
 
                 # Compute result for current test factor
-                heat_rating_dict[factor.func_name], rating = factor(game['HomeTeam'], game['AwayTeam'], self.conn, dt)
+                heat_rating_dict[factor.func_name], rating = factor(game['HomeTeam'], game['AwayTeam'], self.conn, dt, game['GameID'])
 
                 # Add current factors rating to heat_rating
                 heat_rating += rating
