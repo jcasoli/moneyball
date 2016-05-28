@@ -71,6 +71,7 @@ def test_pitching_today(homeTeam, awayTeam, conn, date,):
 
 
     print '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam)
+    return '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam)
 
 
 def test_trip_length(homeTeam, awayTeam, conn, date):
@@ -94,7 +95,7 @@ def test_trip_length(homeTeam, awayTeam, conn, date):
 
 def test_batter_performance(homeTeam, awayTeam, conn, date, gameID):
 
-    firstDayOfSeason = datetime.date(2015, 4, 5)
+    firstDayOfSeason = datetime.date(2016, 4, 1)
     currentDate = date
     daysSinceOpener = currentDate - firstDayOfSeason
     daysSinceOpenerInt = daysSinceOpener.days
@@ -103,7 +104,7 @@ def test_batter_performance(homeTeam, awayTeam, conn, date, gameID):
     currentDate = date
     battingOrder = get_batting_order(homeTeam, conn, dateString)
     battingOrderAway = get_batting_order(awayTeam, conn, dateString)
-    data3 = conn.get_schedules('2015')
+    data3 = conn.get_schedules('2016')
     jn3 = json.loads(data3)
     gameIDindex = 0
     gameIDArray=[]
@@ -124,6 +125,7 @@ def test_batter_performance(homeTeam, awayTeam, conn, date, gameID):
             gameIDArrayAway.append(currentID)
 #            print jn3[gameIDindex]['Day']
         gameIDindexAway = gameIDindexAway-1
+
 
 
     x = game_performance(homeTeam, conn, dateString, battingOrder, gameIDArray)
@@ -155,6 +157,7 @@ def test_batter_performance(homeTeam, awayTeam, conn, date, gameID):
     teamAverageAgainstLeft = teamHitsAgainstLeft/(teamHitsAgainstLeft+teamOutsAgainstLeft)
     print '%s Team has %s hits against righties and is batting %s' %(awayTeam, teamHitsAgainstRight, teamAverageAgainstRight)
     print '%s Team has %s hits against lefties and is batting %s' %(awayTeam, teamHitsAgainstLeft, teamAverageAgainstLeft)
+    return '%s Team has %s hits against righties and is batting %s' %(awayTeam, teamHitsAgainstRight, teamAverageAgainstRight)
 
 def didWin(team_id1, conn, date):
     data = conn.get_games_by_date(date)
@@ -231,6 +234,7 @@ def game_performance(team, conn, date, playerIDArray, gameIDArray):
             playerABArray[j][1] = outsAgainstRighty + playerABArray[j][1]
             playerABArray[j][2] = hitsAgainstLefty + playerABArray[j][2]
             playerABArray[j][3] = outsAgainstLefty + playerABArray[j][3]
+
             ABlist.append(hitsAgainstRighty)
             ABlist.append(outsAgainstRighty)
             ABlist.append(hitsAgainstLefty)
@@ -268,7 +272,7 @@ def get_batting_order(team, conn, date):
 
     pass
 if __name__ == "__main__" :
-    test_batter_performance("TOR", "BOS", conn, today, 17468)
+    test_batter_performance("TOR", "BOS", conn, today, 45655)
     test_pitching_today("TOR", "BOS", conn, today)
     test_trip_length("TOR", "BOS", conn, today)
     test_win_streak("TOR", "BOS", conn, today)
