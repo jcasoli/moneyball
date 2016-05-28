@@ -11,6 +11,7 @@ todayString = '%s-%s-%s' % (now.year, now.month, now.day)
 conn = apiconnect.Connection()
 key = '0deb8f835f264ad99e24cc3622aeb396'
 
+
 def test_win_streak(homeTeam, awayTeam, conn, date):
     streak1 = 0
     streak2 = 0
@@ -37,6 +38,7 @@ def test_win_streak(homeTeam, awayTeam, conn, date):
         x = didWin(awayTeam, conn, dateString)
     print "%s win streak is at %s, %s win streak is at %s" % (homeTeam, streak1, awayTeam, streak2)
     return "%s win streak is at %s, %s win streak is at %s" % (homeTeam, streak1, awayTeam, streak2)
+
 
 def test_pitching_today(homeTeam, awayTeam, conn, date,):
     homePitcher = ''
@@ -70,6 +72,7 @@ def test_pitching_today(homeTeam, awayTeam, conn, date,):
 
     print '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam)
 
+
 def test_trip_length(homeTeam, awayTeam, conn, date):
     currentDate = date
     dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
@@ -87,6 +90,7 @@ def test_trip_length(homeTeam, awayTeam, conn, date):
         x = isAway(conn, dateString, awayTeam)
     print '%s on %s game of road trip' %(awayTeam, length)
     return '%s on %s game of road trip' %(awayTeam, length)
+
 
 def test_batter_performance(homeTeam, awayTeam, conn, date, gameID):
 
@@ -183,6 +187,7 @@ def isAway(conn, date, team):
                 holder = 1
     return holder
 
+
 def game_performance(team, conn, date, playerIDArray, gameIDArray):
     totalAB = [0,0,0,0]
     outsAgainstRighty = 0
@@ -263,8 +268,9 @@ def get_batting_order(team, conn, date):
 
     pass
 if __name__ == "__main__" :
-    test_batter_performance("TOR", "TB", conn, today, 17468)
-    test_pitching_today("TOR", "TB", conn, today)
-    test_trip_length("TOR", "TB", conn, today)
-    test_win_streak("TOR", "TB", conn, today)
+    test_batter_performance("TOR", "BOS", conn, today, 17468)
+    test_pitching_today("TOR", "BOS", conn, today)
+    test_trip_length("TOR", "BOS", conn, today)
+    test_win_streak("TOR", "BOS", conn, today)
+
 

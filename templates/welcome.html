@@ -1,30 +1,24 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Welcome to Moneyball</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="static/welcome.css" rel="stylesheet" media="screen">
-  </head>
-  <body>
+{%  extends "index.html" %}
+{% block title %}
+    Home | Moneyball
+{% endblock %}
+{% block body %}
     <div class="container">
-      <h1>Welcome to Moneyball!</h1>
       <br>
-        <form action="#" method="post">
-            {{ form.dt(class='datepicker') }}
-            {{ form.hidden_tag() }}
-            <input type="submit"/>
-        </form>
-        <table>
-            {% for matchup in result %}
+
+        <table style="width:100%">
             <tr>
-                <th> {{ matchup['HomeTeam'] }} vs. {{ matchup['AwayTeam'] }}</th>
-                <td> {{ matchup['DateTime'] }} </td>
-                <td> {{ matchup['HomeTeamProbablePitcher'] }} </td>
-                <td> {{ matchup['AwayTeamProbablePitcher'] }} </td>
+                <th>Home vs. Away</th>
+                <th>Time</th>
+                <th>Rating</th>
             </tr>
-            {% endfor %}
+            {%  for matchup in result %}
+                <tr class="clickable" onclick="location.href = 'http://127.0.0.1:5000/results?gameid={{ matchup['GameID'] }}'">
+                    <td>{{ matchup['HomeTeam'] }} vs. {{ matchup['AwayTeam'] }}</td>
+                    <td>{{ matchup['DateTime'] }}</td>
+                    <td>{{ matchup['HeatRating'] }}</td>
+                </tr>
+            {%  endfor %}
         </table>
-      <p>Click <a href="/">here</a> to go home.</p>
     </div>
-  </body>
-</html>
+{% endblock %}
