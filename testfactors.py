@@ -21,7 +21,11 @@ class Test:
         except:
             print("Could not open api connection. Will Exit")
             sys.exit(0)
-        self.stadiums = self.conn.get_stadiums()
+        try:
+            self.stadiums = json.loads(self.conn.get_stadiums())
+        except:
+            print("warning: could not load stadiums")
+            self.stadiums = None
 
     def __del__(self):
         """
@@ -77,7 +81,12 @@ class Test:
         :param stadiumid: stadium_id
         :return: Stadium Name (string)
         """
-        return None
+        try:
+            st_dict = next(stadium for stadium in self.stadiums if stadium['StadiumID']==stadiumid)
+        except:
+            return stadiumid
+
+        return st_dict['Name']
 
 
     def run(self, dt):
