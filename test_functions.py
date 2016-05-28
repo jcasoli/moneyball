@@ -12,7 +12,7 @@ conn = apiconnect.Connection()
 key = '0deb8f835f264ad99e24cc3622aeb396'
 
 
-def test_win_streak(homeTeam, awayTeam, conn, date):
+def test_win_streak(homeTeam, awayTeam, conn, date, gameID):
     streak1 = 0
     streak2 = 0
     currentDate = date
@@ -40,7 +40,7 @@ def test_win_streak(homeTeam, awayTeam, conn, date):
     return "%s win streak is at %s, %s win streak is at %s" % (homeTeam, streak1, awayTeam, streak2), 4
 
 
-def test_pitching_today(homeTeam, awayTeam, conn, date,):
+def test_pitching_today(homeTeam, awayTeam, conn, date, gameID):
     homePitcher = ''
     awayPitcher = ''
     dateString = '%s-%s-%s' % (date.year, date.month, date.day)
@@ -74,7 +74,7 @@ def test_pitching_today(homeTeam, awayTeam, conn, date,):
     return '%s is starting for %s against %s for %s' %(homePitcher, homeTeam, awayPitcher, awayTeam), 4
 
 
-def test_trip_length(homeTeam, awayTeam, conn, date):
+def test_trip_length(homeTeam, awayTeam, conn, date, gameID):
     currentDate = date
     dateString = '%s-%s-%s' % (currentDate.year, currentDate.month, currentDate.day)
     data = conn.get_games_by_date(dateString)
