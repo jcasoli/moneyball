@@ -272,9 +272,9 @@ def get_batting_order(team, conn, date):
 
     pass
 if __name__ == "__main__" :
-    test_batter_performance("TOR", "BOS", conn, today, 45655)
-    test_pitching_today("TOR", "BOS", conn, today)
-    test_trip_length("TOR", "BOS", conn, today)
-    test_win_streak("TOR", "BOS", conn, today)
-
+    # test_batter_performance("TOR", "BOS", conn, today, 45655)
+    # test_pitching_today("TOR", "BOS", conn, today)
+    # test_trip_length("TOR", "BOS", conn, today)
+    # test_win_streak("TOR", "BOS", conn, today)
+    pass
 

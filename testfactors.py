@@ -1,6 +1,7 @@
 import apiconnect
 import json
 import sys
+from copy import deepcopy
 from operator import itemgetter
 
 import defaults
@@ -90,6 +91,12 @@ class Test:
 
 
     def run(self, dt):
+        """
+
+        :param dt: datetime object
+        :return: a dictionary of results where each result corresponds to an analysis of a game.
+                these are sorted by how much we think each game will be swayed.
+        """
         """ Runs through all specified factors and returns a dictionary of results with factor names as keys """
         results = []
 
@@ -117,7 +124,7 @@ class Test:
                 heat_rating += rating
 
             matchup[defaults.HEATRATING] = heat_rating
-            matchup[defaults.HEATRATINGDICT] = heat_rating_dict
+            matchup[defaults.HEATRATINGDICT] = deepcopy(heat_rating_dict)
             matchup[defaults.STADIUM] = self._get_stadium_by_id(game['StadiumID'])
             matchup[defaults.AWAYTEAM] = game['AwayTeam']
             matchup[defaults.HOMETEAM] = game['HomeTeam']

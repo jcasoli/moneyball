@@ -1,3 +1,9 @@
+/*media screen and (min-width:320px) {
+
+}
+*/
+
+
 body {
   background-image: url('/static/img/moneyball.jpg');
   background-size: cover;
@@ -82,6 +88,11 @@ font-weight: bold;
 td {
 background: #FAFAFA;
 text-align: center;
+}
+
+.btn:hover {
+  background-color: darkgrey;
+    padding:0.5em;
 }
 
 /* Cells in even rows (2,4,6...) are one olor */

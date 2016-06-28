@@ -6,10 +6,13 @@
     {% endblock %}</title>
     <link rel='shortcut icon' href='/static/img/favicon.png' type='image/x-icon' >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="static/welcome.css" rel="stylesheet" media="screen">
+    <link href="static/welcome.css?x=2" rel="stylesheet" media="screen">
 </head>
 <body>
     {% block body %}
     {%  endblock %}
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
 </body>
 </html>
